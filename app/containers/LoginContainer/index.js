@@ -6,7 +6,9 @@ import { connect } from "react-redux";
 
 import styles from './styles'
 
-export interface Props { }
+export interface Props { 
+    navigation: any
+}
 class LoginContainer extends React.Component<Props> {
     static navigationOptions = { title: 'Welcome', header: null };
     render() {
