@@ -1,12 +1,26 @@
 const initialState = {
+	user: null,
 	isLoading: true,
 };
 
 export default function(state: any = initialState, action: Function) {
-	if (action.type === "IS_LOADING") {
+	console.log(action)
+	if (action.type === "SHOW_LOADING") {
 		return {
 			...state,
-			isLoading: action.isLoading,
+			isLoading: true,
+		};
+	}
+	else if (action.type === "HIDE_LOADING") {
+		return {
+			...state,
+			isLoading: false,
+		};
+	}
+	else if (action.type === "LOGIN_SUCCESS") {
+		return {
+			...state,
+			user: action.user,
 		};
 	}
 	return state;

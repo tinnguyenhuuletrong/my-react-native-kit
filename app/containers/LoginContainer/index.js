@@ -3,36 +3,72 @@
 import React from 'react';
 import { Platform, View, Text, Button, TextInput } from 'react-native';
 import { connect } from "react-redux";
+import { NavigationActions } from 'react-navigation';
 
 import styles from './styles'
+import { actionLogin } from '../../actions'
 
-export interface Props { 
-    navigation: any
+export interface Props {
+    navigation: any,
+    user: Object,
+    doLogin: Function
 }
-class LoginContainer extends React.Component<Props> {
-    static navigationOptions = { title: 'Welcome', header: null };
+export interface State {
+    userName: String,
+    pass: String
+}
+class LoginContainer extends React.Component<Props, State> {
+    static navigationOptions = { header: null };
+
+    goToHomeScene(userInfo) {
+        const resetAction = NavigationActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({
+                routeName: 'Home', 
+                params: {
+                    userName: userInfo.userName
+                }
+            })],
+        });
+        this.props.navigation.dispatch(resetAction);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const { user } = nextProps
+        if (user) {
+            this.goToHomeScene(user);
+        }
+    }
+
     render() {
         return (
             <View style={styles.container}>
                 <View style={styles.loginFormContainer}>
                     <View style={styles.inputView}>
-                        <TextInput 
+                        <TextInput
                             style={{ height: 40, width: 250, fontSize: 20 }}
-                            placeholder="User Name" />
+                            placeholder="User Name"
+                            onChangeText={val => this.setState({ userName: val })}
+                        />
                     </View>
 
                     <View style={styles.inputView}>
-                        <TextInput 
-                            style={{ height: 40, width: 250, fontSize: 20 }} 
+                        <TextInput
+                            style={{ height: 40, width: 250, fontSize: 20 }}
                             secureTextEntry
-                            placeholder="Password" />
+                            placeholder="Password"
+                            onChangeText={val => this.setState({ pass: val })}
+                        />
                     </View>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <Button 
-                        title="Login" 
-                        style={{ width: 200 }} 
-                        onPress={_ => {this.props.navigation.navigate('Home')}}
+                    <Button
+                        title="Login"
+                        style={{ width: 200 }}
+                        onPress={_ => {
+                            const { userName, pass } = this.state
+                            this.props.doLogin(userName, pass)
+                        }}
                     />
                 </View>
             </View>
@@ -40,6 +76,10 @@ class LoginContainer extends React.Component<Props> {
     }
 };
 
-const bindAction = dispatch => ({})
-const mapStateToProps = state => ({});
+const bindAction = dispatch => ({
+    doLogin: (usrName, pass) => dispatch(actionLogin(usrName, pass))
+})
+const mapStateToProps = state => ({
+    user: state.appStateReducer.user
+});
 export default connect(mapStateToProps, bindAction)(LoginContainer);
