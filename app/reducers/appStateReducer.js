@@ -1,6 +1,6 @@
 const initialState = {
 	user: null,
-	isLoading: true,
+	isLoading: false,
 };
 
 export default function(state: any = initialState, action: Function) {

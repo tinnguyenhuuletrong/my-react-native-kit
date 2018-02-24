@@ -3,10 +3,11 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        width: '100%',
+        height: '100%', 
         justifyContent: 'center',
         alignItems: 'center',
-        flexDirection: 'column',
-        backgroundColor: '#F5FCFF',
+        flexDirection: 'column'
     },
     loginFormContainer: {
         marginRight:10,
@@ -21,7 +22,13 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         margin: 10
     }
-
 });
 
-export default styles;
+const assets = {
+    bg: require('../../assets/bg.png')
+};
+
+export {
+    styles,
+    assets
+}

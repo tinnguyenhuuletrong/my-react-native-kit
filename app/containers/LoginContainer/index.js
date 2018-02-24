@@ -1,12 +1,14 @@
 //@flow
 
 import React from 'react';
-import { Platform, View, Text, Button, TextInput } from 'react-native';
+import { Alert, View, Text, Button, TextInput, ImageBackground } from 'react-native';
 import { connect } from "react-redux";
 import { NavigationActions } from 'react-navigation';
 
-import styles from './styles'
-import { actionLogin } from '../../actions'
+import { styles, assets } from './styles';
+import { actionLogin } from '../../actions';
+import CustomButton from '../../components/CustomButton';
+import ConvertErrorMessage from '../../utils/error';
 
 export interface Props {
     navigation: any,
@@ -20,11 +22,16 @@ export interface State {
 class LoginContainer extends React.Component<Props, State> {
     static navigationOptions = { header: null };
 
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
     goToHomeScene(userInfo) {
         const resetAction = NavigationActions.reset({
             index: 0,
             actions: [NavigationActions.navigate({
-                routeName: 'Home', 
+                routeName: 'Home',
                 params: {
                     userName: userInfo.userName
                 }
@@ -40,9 +47,20 @@ class LoginContainer extends React.Component<Props, State> {
         }
     }
 
+    _showError(msg) {
+        Alert.alert(
+            'Opp!',
+            msg,
+            { cancelable: false }
+        );
+    }
+
     render() {
         return (
-            <View style={styles.container}>
+            <ImageBackground
+                source={assets.bg}
+                style={styles.container}
+            >
                 <View style={styles.loginFormContainer}>
                     <View style={styles.inputView}>
                         <TextInput
@@ -62,22 +80,27 @@ class LoginContainer extends React.Component<Props, State> {
                     </View>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <Button
-                        title="Login"
+                    <CustomButton
                         style={{ width: 200 }}
                         onPress={_ => {
                             const { userName, pass } = this.state
+                            console.log(userName, pass)
+                            if (!(userName && pass))
+                                return this._showError(ConvertErrorMessage('MissingUserNameOrPass'));
+
                             this.props.doLogin(userName, pass)
-                        }}
-                    />
+                        }}>
+                        <Text>Login</Text>
+                    </CustomButton>
+
                 </View>
-            </View>
+            </ImageBackground>
         );
     }
 };
 
 const bindAction = dispatch => ({
-    doLogin: (usrName, pass) => dispatch(actionLogin(usrName, pass))
+    doLogin: (usrName, pass) => dispatch(actionLogin(dispatch, usrName, pass))
 })
 const mapStateToProps = state => ({
     user: state.appStateReducer.user

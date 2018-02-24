@@ -14,6 +14,11 @@ const instructions = Platform.select({
 
 export interface Props { }
 class BlankContainer extends React.Component<Props> {
+    
+    constructor(props) {
+        super(props)
+    }
+
     render() {
         return (
             <View style={styles.container}>

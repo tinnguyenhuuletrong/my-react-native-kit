@@ -4,10 +4,13 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import React from 'react';
+import { View } from 'react-native';
+import { connect } from "react-redux";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { StackNavigator, TabNavigator, TabBarBottom } from 'react-navigation';
 
+import LoadingIndicator from './components/LoadingIndicator';
 import LoginContainer from './containers/LoginContainer';
 import BlankContainer from './containers/BlankContainer';
 
@@ -50,9 +53,24 @@ const RootStack = StackNavigator(
   }
 );
 
-export interface Props { }
-export default class App extends Component<Props> {
+export interface Props {
+  isLoading: Boolean
+}
+class App extends React.Component<Props> {
+
+  constructor(props) {
+    super(props);
+  }
+
   render() {
-    return <RootStack />;
+    return <View style={{ flex: 1 }}>
+      <RootStack />
+      {this.props.isLoading && <LoadingIndicator />}
+    </View>
   }
 }
+
+const mapStateToProps = state => ({
+  isLoading: state.appStateReducer.isLoading
+});
+export default connect(mapStateToProps)(App);
