@@ -14,6 +14,8 @@ const instructions = Platform.select({
 
 export interface Props { }
 class BlankContainer extends React.Component<Props> {
+    static navigationOptions = { title: 'Welcome', headerLeft: null };
+
     render() {
         return (
             <View style={styles.container}>
