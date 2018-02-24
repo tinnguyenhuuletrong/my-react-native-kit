@@ -13,18 +13,17 @@ class LoginContainer extends React.Component<Props> {
         return (
             <View style={styles.container}>
                 <View style={styles.loginFormContainer}>
-                    <Text>UserName</Text>
-                    <View style={styles.inputView}>
-                        <TextInput style={{ height: 40, width: 200, fontSize: 20 }} />
-                    </View>
-
-                    <View style={{ marginTop: 30 }} />
-                    
-                    <Text>Password</Text>
                     <View style={styles.inputView}>
                         <TextInput 
-                            style={{ height: 40, width: 200, fontSize: 20 }} 
-                            secureTextEntry />
+                            style={{ height: 40, width: 250, fontSize: 20 }}
+                            placeholder="User Name" />
+                    </View>
+
+                    <View style={styles.inputView}>
+                        <TextInput 
+                            style={{ height: 40, width: 250, fontSize: 20 }} 
+                            secureTextEntry
+                            placeholder="Password" />
                     </View>
                 </View>
                 <View style={styles.buttonContainer}>

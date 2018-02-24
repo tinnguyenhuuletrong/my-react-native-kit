@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     inputView: {
         borderBottomColor: 'black',
         borderBottomWidth: 1,
-        paddingTop: 10
+        margin: 10
     }
 
 });
