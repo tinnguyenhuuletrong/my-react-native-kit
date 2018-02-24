@@ -13,32 +13,31 @@ import { StackNavigator, TabNavigator, TabBarBottom } from 'react-navigation';
 import LoadingIndicator from './components/LoadingIndicator';
 import LoginContainer from './containers/LoginContainer';
 import BlankContainer from './containers/BlankContainer';
+import HomeContainer from './containers/HomeContainer';
+import SettingContainer from './containers/SettingContainer';
 
 const Tabs = TabNavigator({
-  Home: { screen: BlankContainer },
-  Settings: { screen: BlankContainer },
+  Home: { screen: HomeContainer },
+  Settings: { screen: SettingContainer },
 }, {
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, tintColor }) => {
         const { routeName } = navigation.state;
         let iconName;
         if (routeName === 'Home') {
-          iconName = `ios-information-circle${focused ? '' : '-outline'}`;
+          iconName = `ios-home${focused ? '' : '-outline'}`;
         } else if (routeName === 'Settings') {
           iconName = `ios-options${focused ? '' : '-outline'}`;
         }
         return <Ionicons name={iconName} size={25} color={tintColor} />;
-      },
-      title: "Wellcome"
+      }
     }),
     tabBarOptions: {
-      activeTintColor: 'tomato',
+      activeTintColor: '#4286f4',
       inactiveTintColor: 'gray',
     },
     tabBarComponent: TabBarBottom,
-    tabBarPosition: 'bottom',
-    animationEnabled: false,
-    swipeEnabled: false,
+    tabBarPosition: 'bottom'
   });
 
 const RootStack = StackNavigator(

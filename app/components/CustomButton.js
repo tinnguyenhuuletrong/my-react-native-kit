@@ -15,10 +15,11 @@ const defaultStyles = {
 };
 
 export interface Props {
-    childrens: Object
+    children?: any,
+    style?: Object
 }
 export default class CustomButton extends React.PureComponent<Props> {
-    constructor(props) {
+    constructor(props : Props) {
         super(props)
     }
 

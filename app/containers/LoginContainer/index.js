@@ -16,15 +16,18 @@ export interface Props {
     doLogin: Function
 }
 export interface State {
-    userName: String,
-    pass: String
+    userName: any,
+    pass: any
 }
 class LoginContainer extends React.Component<Props, State> {
     static navigationOptions = { header: null };
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            userName: null,
+            pass: null
+        };
     }
 
     goToHomeScene(userInfo) {
@@ -51,6 +54,7 @@ class LoginContainer extends React.Component<Props, State> {
         Alert.alert(
             'Opp!',
             msg,
+            [],
             { cancelable: false }
         );
     }

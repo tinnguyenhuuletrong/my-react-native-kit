@@ -15,8 +15,9 @@ const defaultStyles = {
 };
 
 export interface Props {}
-export default class LoadingIndicator extends React.PureComponent<Props> {
-    constructor(props) {
+export interface States {}
+export default class LoadingIndicator extends React.PureComponent<Props, States> {
+    constructor(props : Props) {
         super(props)
     }
 
