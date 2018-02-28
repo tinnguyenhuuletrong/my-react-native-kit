@@ -7,7 +7,6 @@ function actionLoading(val: boolean) {
 }
 
 export function actionLogin(dispatch: Function, userName: String, pass: String) : Promise<Object> {
-    console.log(dispatch)
     return new Promise((resolve, reject) => {
         dispatch(actionLoading(true));
         setTimeout(val => {
