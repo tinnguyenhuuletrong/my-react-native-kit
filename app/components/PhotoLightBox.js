@@ -1,7 +1,6 @@
 //@flow
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { View, TouchableOpacity, Modal, Image, StyleSheet, Text, Dimensions } from 'react-native';
 import ImageZoom from "react-native-image-pan-zoom"
 
@@ -19,9 +18,10 @@ const ModalContainer = ({ close, source }) => {
         <View style={styles.modalMiddleContainer} >
             <ImageZoom
                 cropWidth={width}
-                cropHeight={height - headerHeight}
+                cropHeight={height - headerHeight * 2}
                 imageWidth={width}
-                imageHeight={height / 3} >
+                imageHeight={height / 3} 
+            >
                 <Image source={source} style={{ width: width, height: height / 3 }} resizeMode='contain' />
             </ImageZoom>
         </View>
@@ -29,39 +29,33 @@ const ModalContainer = ({ close, source }) => {
     );
 };
 
-export interface Props {
-    source: Object,
-    style?: Object
-}
-export interface States {
-    modalVisible: boolean
-}
-export default class PhotoLightBox extends React.Component<Props, States> {
+export default class PhotoLightBox extends React.Component {
     constructor(props: Props) {
         super(props)
         this.state = {
             modalVisible: false,
         };
     }
-
+    
     setModalVisible(visible: boolean) {
         this.setState({ modalVisible: visible });
     }
 
     render() {
         const { style, source } = this.props;
-        return (<View style={{ flex: 1 }}>
-            <Modal
+        return (<View>
+            {this.state.modalVisible ? <Modal
                 animationType='fade'
                 hardwareAccelerated={true}
-                transparent={true}
+                transparent={false}
                 visible={this.state.modalVisible}
                 onRequestClose={() => { }}>
                 <ModalContainer
                     source={source}
                     close={() => this.setModalVisible(!this.state.modalVisible)}
                 />
-            </Modal>
+            </Modal> : <View/>
+            }
 
             <TouchableOpacity
                 onPress={() => {
@@ -73,9 +67,6 @@ export default class PhotoLightBox extends React.Component<Props, States> {
         );
     }
 }
-
-PhotoLightBox.propTypes = {
-};
 
 const styles = StyleSheet.create({
     modalContainer: {
@@ -95,20 +86,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    modalTopHeader: {
-        height: headerHeight,
-        flex: 1,
-    },
-    modalTopRight: {
-        height: headerHeight,
-        width: headerHeight,
-    },
     modalMiddleContainer: {
         flex: 2,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        paddingBottom: headerHeight
     },
-    modalBottomContainer: {
-        flex: 0.3,
-    }
 })
