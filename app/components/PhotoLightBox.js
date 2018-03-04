@@ -1,6 +1,7 @@
 //@flow
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { View, TouchableOpacity, Modal, Image, StyleSheet, Text, Dimensions } from 'react-native';
 import ImageZoom from "react-native-image-pan-zoom"
 
@@ -29,7 +30,14 @@ const ModalContainer = ({ close, source }) => {
     );
 };
 
-export default class PhotoLightBox extends React.Component {
+export interface Props {
+    source: Object,
+    style?: Object
+}
+export interface States {
+    modalVisible: boolean
+}
+export default class PhotoLightBox extends React.Component<Props, States> {
     constructor(props: Props) {
         super(props)
         this.state = {
@@ -67,6 +75,9 @@ export default class PhotoLightBox extends React.Component {
         );
     }
 }
+
+PhotoLightBox.propTypes = {
+};
 
 const styles = StyleSheet.create({
     modalContainer: {
